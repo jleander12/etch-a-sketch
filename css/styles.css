@@ -1,0 +1,23 @@
+body {
+    background-color: lightgray;
+    padding: 100px;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    flex: 1;
+}
+
+.square {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border: 1px;
+    border-color: lightgray;
+    border-style: solid;
+}
