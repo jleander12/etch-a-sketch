@@ -7,10 +7,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+    margin: auto;
+    background-color: gray;
 }
 
-.container {
-    flex: 1;
+.column {
+    flex: 0 0 auto;
 }
 
 .square {
@@ -20,4 +23,8 @@ body {
     border: 1px;
     border-color: lightgray;
     border-style: solid;
+}
+
+.square.drawn {
+    background-color: red;
 }
