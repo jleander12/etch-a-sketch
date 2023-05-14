@@ -6,13 +6,12 @@ let mouseDownFlag = false;
 //locate container to add columns and squares into
 const container = document.querySelector('#container');
 
+
 generateGrid();
 
 //generate grid 
 function generateGrid() {
-    // let squareSize = gridWidth/squaresX;
-    // squares.forEach(square => square.getElementsByClassName.width=squareSize);
-    // squares.forEach(square => square.getElementsByClassName.height=squareSize);
+    let squareSize = gridWidth/squaresX;
     for (let i = 0; i < squaresX; i++) {
         //create div element to hold each column of squares
         const column = document.createElement('div');
@@ -25,6 +24,8 @@ function generateGrid() {
         }
         container.appendChild(column);
     }
+    sizeSquares(squareSize);
+    initSquareEvents();    
 }
 
 function eraseGrid() {
@@ -32,9 +33,9 @@ function eraseGrid() {
 }
 
 function drawSquare(e) {
-    if (mouseDownFlag) {
-        this.classList.add('drawn');
-    }
+    console.log(e.type);
+    if (e.type === 'mouseover' && mouseDownFlag != true) return;
+    this.classList.add('drawn');
 }
 
 function updateControls(e) {
@@ -42,17 +43,17 @@ function updateControls(e) {
         eraseGrid();
     }
     if (this.id === 'resize') {
-        let userGrid = Number(prompt('Please enter the number of squares in the grid','16'));
-        if (typeof userGrid != 'number') return;
-        if (userGrid > 100) {
+        let gridSize = Number(document.getElementById('grid-size').value);
+        if (typeof gridSize != 'number') return;
+        if (gridSize > 100) {
             squaresX = 100;
             squaresY = 100;
-        } else if (userGrid < 1) {
+        } else if (gridSize < 1) {
             squaresX = 1;
             squaresY = 1;
         } else {
-            squaresX = userGrid;
-            squaresY = userGrid;
+            squaresX = gridSize;
+            squaresY = gridSize;
         }
         container.replaceChildren();
         generateGrid();
@@ -60,9 +61,17 @@ function updateControls(e) {
 
 }
 
-//event listener for mouseover of squares
-const squares = document.querySelectorAll('.square');
-squares.forEach(square => square.addEventListener('mouseover',drawSquare));
+function sizeSquares(squareSize) {
+    const squares = document.querySelectorAll('.square');
+    squares.forEach(square => square.style.width=squareSize);
+    squares.forEach(square => square.style.height=squareSize);
+}
+
+function initSquareEvents() {
+    const squares = document.querySelectorAll('.square');
+    squares.forEach(square => square.addEventListener('mousedown', drawSquare));
+    squares.forEach(square => square.addEventListener('mouseover', drawSquare));
+}
 
 //track mouse down vs up position and set to global mouse down flag for use when drawing
 document.body.onmousedown = function() {
@@ -72,5 +81,5 @@ document.body.onmouseup = function() {
     mouseDownFlag = false;
 }
 
-const buttons = document.querySelectorAll('.button');
+const buttons = document.querySelectorAll('button');
 buttons.forEach(button => button.addEventListener('click',updateControls));
