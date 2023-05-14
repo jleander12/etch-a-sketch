@@ -3,32 +3,29 @@ let squaresX = 16;
 let squaresY = 16;
 let mouseDownFlag = false;
 
-//locate container to add columns and squares into
+//locate container to add columns and squares into - global
 const container = document.querySelector('#container');
-
 
 generateGrid();
 
 //generate grid 
 function generateGrid() {
-    let squareSize = gridWidth/squaresX;
     for (let i = 0; i < squaresX; i++) {
-        //create div element to hold each column of squares
-        const column = document.createElement('div');
+        const column = document.createElement('div'); //create div element to hold each column of squares
         column.classList.add('column');
         for (let j = 0; j < squaresY; j++) {
-            //create div element for individual squares
-            const square = document.createElement('div');
+            const square = document.createElement('div'); //create div element for each individual square
             square.classList.add('square');
             column.appendChild(square);
         }
         container.appendChild(column);
     }
-    sizeSquares(squareSize);
     initSquareEvents();    
 }
 
+//this function "erases" the grid by removing the class "drawn" from all squares
 function eraseGrid() {
+    const squares = document.querySelectorAll('.square');
     squares.forEach(square => square.classList.remove('drawn'));
 }
 
@@ -59,12 +56,6 @@ function updateControls(e) {
         generateGrid();
     }
 
-}
-
-function sizeSquares(squareSize) {
-    const squares = document.querySelectorAll('.square');
-    squares.forEach(square => square.style.width=squareSize);
-    squares.forEach(square => square.style.height=squareSize);
 }
 
 function initSquareEvents() {
