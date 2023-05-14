@@ -55,7 +55,6 @@ function updateControls(e) {
         container.replaceChildren();
         generateGrid();
     }
-
 }
 
 function initSquareEvents() {
